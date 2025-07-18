@@ -1,11 +1,52 @@
+import {useEffect, useState} from "react";
+import {Link, useLocation} from "react-router-dom";
+import Cookies from "js-cookie";
+
 function Header() {
+  const [isDark, setIsDark] = useState(false);
+
+  // Khi component mount, lấy trạng thái từ cookie và set state
+  useEffect(() => {
+    const mode = Cookies.get("mode");
+    if (mode === "dark-mode") {
+      setIsDark(true);
+      document.body.classList.add("dark-mode");
+      console.log("Cookie: dark mode");
+    }else {
+      setIsDark(false);
+      document.body.classList.remove("dark-mode");
+      console.log("Cookie: light mode");
+    }
+  }, []);
+
+  // Khi toggle thay đổi
+  const handleChange = (e) => {
+    const checked = e.target.checked;
+    setIsDark(checked);
+    if (checked) {
+      document.body.classList.add("dark-mode");
+      Cookies.set("mode", "dark-mode", { expires: 7 });
+      console.log("change to dark mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+      Cookies.remove("mode");
+      console.log("change to light mode");
+    }
+  };
+
+  // Function check active route
+  const isActiveRoute = (route) => {
+    const location = useLocation();
+    return location.pathname === route;
+  };
+
   return (
     <header className="header text-center">
       <div className="force-overflow">
         <h1 className="blog-name pt-lg-4 mb-0">
-          <a className="no-text-decoration" href="index.html">
+          <Link className="no-text-decoration" to="/">
             Simon Doe
-          </a>
+          </Link>
         </h1>
 
         <nav className="navbar navbar-expand-lg navbar-dark">
@@ -64,15 +105,15 @@ function Header() {
 
             <ul className="navbar-nav flex-column text-start">
               <li className="nav-item">
-                <a className="nav-link active" href="index.html">
+                <a className="nav-link active" to="/">
                   <i className="fas fa-user fa-fw me-2"></i>About Me
                   <span className="sr-only">(current)</span>
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="portfolio.html">
+                <Link className="nav-link" to="/portfolio">
                   <i className="fas fa-laptop-code fa-fw me-2"></i>Portfolio
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="services.html">
@@ -81,9 +122,9 @@ function Header() {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="resume.html">
+                <Link className="nav-link" to="/resume">
                   <i className="fas fa-file-alt fa-fw me-2"></i>Resume
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="blog-home.html">
@@ -91,10 +132,10 @@ function Header() {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="contact.html">
+                <Link className="nav-link" to="/contact">
                   <i className="fas fa-envelope-open-text fa-fw me-2"></i>
                   Contact
-                </a>
+                </Link>
               </li>
               <li className="nav-item dropdown">
                 <a
@@ -145,10 +186,10 @@ function Header() {
             <div className="dark-mode-toggle text-center w-100">
               <hr className="mb-4" />
               <h4 className="toggle-name mb-3 ">
-                <i className="fas fa-adjust me-1"></i>Dark Mode
+                <i className="fas fa-adjust me-1"></i>{isDark ? "Light Mode" : "Dark Mode"}
               </h4>
 
-              <input className="toggle" id="darkmode" type="checkbox" />
+              <input className="toggle" id="darkmode" type="checkbox" onChange={handleChange} checked={isDark} />
               <label
                 className="toggle-btn mx-auto mb-0"
                 htmlFor="darkmode"

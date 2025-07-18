@@ -8,10 +8,15 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   plugins: [react()],
 
+  build: {
+    sourcemap: false,
+  },
+
   server: {
     port: 3000,
     open: true,
     hmr: true,
+    sourcemapIgnoreList: () => true,
   },
 
   resolve: {
