@@ -1,10 +1,12 @@
 import {useEffect, useState} from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
 
 function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
   const [isDark, setIsDark] = useState(false);
+  const [activeSection, setActiveSection] = useState('about');
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Khi component mount, lấy trạng thái từ cookie và set state
   useEffect(() => {
@@ -18,6 +20,29 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
       document.body.classList.remove("dark-mode");
       console.log("Cookie: light mode");
     }
+  }, []);
+
+  // Theo dõi URL changes để update active section
+  useEffect(() => {
+    let hash = location.hash.replace('#', '');
+    if (!hash || hash === '') {
+      hash = 'about';
+      navigate(`#about`, { replace: true });
+    }
+    setActiveSection(hash);
+  }, [location, navigate]);
+
+  // Component mount - scroll to about section mặc định
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!location.hash && aboutRef?.current) {
+        aboutRef.current.scrollIntoView({ behavior: 'smooth' });
+        navigate('#about', { replace: true });
+        setActiveSection('about');
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // Khi toggle thay đổi
@@ -35,26 +60,47 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
     }
   };
 
-  // Function check active route
-  const isActiveRoute = (route) => {
-    const location = useLocation();
-    return location.pathname === route;
-  };
-
   // Function scroll và update URL
   const scrollToSection = (ref, hash) => {
     if (ref?.current) {
       ref.current.scrollIntoView({ behavior: 'smooth' });
-      // Update URL với hash
-      navigate(`/${hash}`, { replace: true });
+      // Update URL với hash format
+      navigate(`#${hash}`, { replace: true });
+      setActiveSection(hash);
     }
   };
+
+  // Function kiểm tra section active
+  const isActive = (sectionName) => {
+    return activeSection === sectionName;
+  };
+
+  <style jsx>{`
+    .nav-link.active {
+      font-weight: bold;
+      color: #007bff !important;
+      background-color: rgba(0, 123, 255, 0.1);
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    
+    .nav-link {
+      transition: all 0.3s ease;
+      padding: 8px 12px;
+      margin: 2px 0;
+    }
+    
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+    }
+  `}</style>
 
   return (
     <header className="header text-center">
       <div className="force-overflow">
         <h1 className="blog-name pt-lg-4 mb-0">
-          <a className="no-text-decoration" href="/#about" onClick={(e) => {e.preventDefault(); scrollToSection(aboutRef, 'about');}}>
+          <a className="no-text-decoration" href="#about" onClick={(e) => {e.preventDefault(); scrollToSection(aboutRef, 'about');}}>
             Simon Doe
           </a>
         </h1>
@@ -85,27 +131,27 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
               </div>
               <ul className="social-list list-inline py-2 mx-auto">
                 <li className="list-inline-item">
-                  <a href="#">
+                  <a href="#" aria-label="Twitter">
                     <i className="fa-brands fa-x-twitter fa-fw"></i>
                   </a>
                 </li>
                 <li className="list-inline-item">
-                  <a href="#">
+                  <a href="#" aria-label="LinkedIn">
                     <i className="fa-brands fa-linkedin-in fa-fw"></i>
                   </a>
                 </li>
                 <li className="list-inline-item">
-                  <a href="#">
+                  <a href="#" aria-label="GitHub">
                     <i className="fa-brands fa-github-alt fa-fw"></i>
                   </a>
                 </li>
                 <li className="list-inline-item">
-                  <a href="#">
+                  <a href="#" aria-label="Stack Overflow">
                     <i className="fa-brands fa-stack-overflow fa-fw"></i>
                   </a>
                 </li>
                 <li className="list-inline-item">
-                  <a href="#">
+                  <a href="#" aria-label="CodePen">
                     <i className="fa-brands fa-codepen fa-fw"></i>
                   </a>
                 </li>
@@ -115,34 +161,32 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
 
             <ul className="navbar-nav flex-column text-start">
               <li className="nav-item">
-                <a 
-                  className="nav-link active" 
+                <a
                   href="#about"
+                  className={`nav-link ${isActive("about") ? "active" : ""}`}
                   onClick={(e) => {
-                    e.preventDefault(); 
-                    scrollToSection(aboutRef, 'about');
+                    e.preventDefault();
+                    scrollToSection(aboutRef, "about");
                   }}
                 >
                   <i className="fas fa-user fa-fw me-2"></i>About Me
-                  <span className="sr-only">(current)</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a 
-                  className="nav-link" 
+                  className={`nav-link ${isActive("skills") ? "active" : ""}`} 
                   href="#skills"
                   onClick={(e) => {
                     e.preventDefault(); 
                     scrollToSection(skillsRef, 'skills');
                   }}
                 >
-                  <i className="fas fa-user fa-fw me-2"></i>Skills
-                  <span className="sr-only">(current)</span>
+                  <i className="fas fa-cogs fa-fw me-2"></i>Skills
                 </a>
               </li>
               <li className="nav-item">
                 <a 
-                  className="nav-link" 
+                  className={`nav-link ${isActive("projects") ? "active" : ""}`} 
                   href="#projects"
                   onClick={(e) => {
                     e.preventDefault(); 
@@ -154,7 +198,7 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
               </li>
               <li className="nav-item">
                 <a 
-                  className="nav-link" 
+                  className={`nav-link ${isActive("resume") ? "active" : ""}`} 
                   href="#resume"
                   onClick={(e) => {
                     e.preventDefault(); 
@@ -165,8 +209,8 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
                 </a>
               </li>
               <li className="nav-item">
-                <a 
-                  className="nav-link" 
+                <a
+                  className={`nav-link ${isActive("contact") ? "active" : ""}`} 
                   href="#contact"
                   onClick={(e) => {
                     e.preventDefault(); 
@@ -216,8 +260,11 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
             <div className="my-2">
               <a
                 className="btn btn-primary"
-                href="contact.html"
-                target="_blank"
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(contactRef, 'contact');
+                }}
               >
                 <i className="fas fa-paper-plane me-2"></i>Hire Me
               </a>

@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import {useEffect, useState} from "react";
 import skills from "../data/skills";
 import projects from "../data/project";
 import "../styles/timeline.css";
+import { Typewriter } from "react-simple-typewriter";
 
 function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
   return (
@@ -9,9 +10,11 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
       <section id="about" ref={aboutRef} className="about-me-section p-3 p-lg-5 theme-bg-light">
         <div className="container">
           <div className="profile-teaser row">
-            <div className="col">
+            <div data-aos="fade-up" data-aos-delay="0" className="col">
               <h2 className="name font-weight-bold mb-1">Simon Doe</h2>
-              <div className="tagline mb-3">Senior Software Engineer</div>
+              <div className="tagline mb-3">
+                <Typewriter words={["Frontend Developer", "Backend Developer", "Fullstack Developer"]} loop={0} cursor cursorStyle="|" typeSpeed={70} deleteSpeed={50} delaySpeed={1000} />
+                </div>
               <div className="bio mb-4">
                 I'm a software engineer specialised in frontend and backend
                 development for complex scalable web apps. I write about
@@ -36,7 +39,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
                 </a>
                 <a className="btn btn-secondary mb-3" href="#resume" onClick={(e) => {e.preventDefault(); resumeRef.current.scrollIntoView({ behavior: "smooth" });}}>
                   <i className="fas fa-file-alt me-2"></i>
-                  <span className="d-none d-md-inline">View</span> Resume
+                  <span className="d-none d-md-inline">View</span> Profile
                 </a>
               </div>
             </div>
@@ -52,7 +55,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
         </div>
       </section>
 
-      <section id="skills" ref={skillsRef} className="overview-section p-3 p-lg-5">
+      <section data-aos="fade-up" data-aos-delay="500" id="skills" ref={skillsRef} className="overview-section p-3 p-lg-5">
         <div className="container">
           <h2 className="section-title font-weight-bold mb-3">What I do</h2>
           <div className="section-intro mb-5">
@@ -103,7 +106,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
         <hr />
       </div>
 
-      <section id="projects" ref={projectsRef} className="featured-section p-3 p-lg-5">
+      <section data-aos="fade-up" id="projects" ref={projectsRef} className="featured-section p-3 p-lg-5">
         <div className="container">
           <h2 className="section-title font-weight-bold mb-5">
             Featured Projects
@@ -162,7 +165,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
       </div>
 
       {/* Resume Section - Fixed */}
-      <section id="resume" ref={resumeRef} className="resume-section p-3 p-lg-5">
+      <section data-aos="fade-up" id="resume" ref={resumeRef} className="resume-section p-3 p-lg-5">
         <div className="container">
           <h2 className="resume-title">Resume</h2>
           
@@ -253,7 +256,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
         <hr />
       </div>
 
-      <section className="cta-section theme-bg-light py-5 pb-0">
+      <section data-aos="fade-up" className="cta-section theme-bg-light py-5 pb-0">
         <div className="container text-center single-col-max-width">
           <h2 id="contact" ref={contactRef} className="heading">Contact</h2>
           <div className="intro">
@@ -314,7 +317,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
           </div>
         </div>
       </section>
-      <section className="contact-section px-3 py-5 p-md-5">
+      <section data-aos="fade-up" className="contact-section px-3 py-5 p-md-5">
         <div className="container">
           <form
             id="contact-form"
@@ -325,7 +328,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
             <h3 className="text-center mb-3">Get In Touch</h3>
             <div className="row g-3">
               <div className="col-12 col-md-6">
-                <label className="sr-only" for="cname">
+                <label className="sr-only" htmlFor="cname">
                   Name
                 </label>
                 <input
@@ -340,7 +343,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
                 />
               </div>
               <div className="col-12 col-md-6">
-                <label className="sr-only" for="cemail">
+                <label className="sr-only" htmlFor="cemail">
                   Email
                 </label>
                 <input
@@ -379,7 +382,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
                 </div>
               </div>
               <div className="col-12">
-                <label className="sr-only" for="cmessage">
+                <label className="sr-only" htmlFor="cmessage">
                   Your message
                 </label>
                 <textarea
