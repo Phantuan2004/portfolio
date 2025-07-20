@@ -1,9 +1,10 @@
 import {useEffect, useState} from "react";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
 
-function Header() {
+function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
   const [isDark, setIsDark] = useState(false);
+  const navigate = useNavigate();
 
   // Khi component mount, lấy trạng thái từ cookie và set state
   useEffect(() => {
@@ -40,13 +41,22 @@ function Header() {
     return location.pathname === route;
   };
 
+  // Function scroll và update URL
+  const scrollToSection = (ref, hash) => {
+    if (ref?.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+      // Update URL với hash
+      navigate(`/${hash}`, { replace: true });
+    }
+  };
+
   return (
     <header className="header text-center">
       <div className="force-overflow">
         <h1 className="blog-name pt-lg-4 mb-0">
-          <Link className="no-text-decoration" to="/">
+          <a className="no-text-decoration" href="/#about" onClick={(e) => {e.preventDefault(); scrollToSection(aboutRef, 'about');}}>
             Simon Doe
-          </Link>
+          </a>
         </h1>
 
         <nav className="navbar navbar-expand-lg navbar-dark">
@@ -105,39 +115,69 @@ function Header() {
 
             <ul className="navbar-nav flex-column text-start">
               <li className="nav-item">
-                <a className="nav-link active" to="/">
+                <a 
+                  className="nav-link active" 
+                  href="#about"
+                  onClick={(e) => {
+                    e.preventDefault(); 
+                    scrollToSection(aboutRef, 'about');
+                  }}
+                >
                   <i className="fas fa-user fa-fw me-2"></i>About Me
                   <span className="sr-only">(current)</span>
                 </a>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/portfolio">
-                  <i className="fas fa-laptop-code fa-fw me-2"></i>Portfolio
-                </Link>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="services.html">
-                  <i className="fas fa-briefcase fa-fw me-2"></i>Services &amp;
-                  Pricing
+                <a 
+                  className="nav-link" 
+                  href="#skills"
+                  onClick={(e) => {
+                    e.preventDefault(); 
+                    scrollToSection(skillsRef, 'skills');
+                  }}
+                >
+                  <i className="fas fa-user fa-fw me-2"></i>Skills
+                  <span className="sr-only">(current)</span>
                 </a>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/resume">
+                <a 
+                  className="nav-link" 
+                  href="#projects"
+                  onClick={(e) => {
+                    e.preventDefault(); 
+                    scrollToSection(projectsRef, 'projects');
+                  }}
+                >
+                  <i className="fas fa-laptop-code fa-fw me-2"></i>Projects
+                </a>
+              </li>
+              <li className="nav-item">
+                <a 
+                  className="nav-link" 
+                  href="#resume"
+                  onClick={(e) => {
+                    e.preventDefault(); 
+                    scrollToSection(resumeRef, 'resume');
+                  }}
+                >
                   <i className="fas fa-file-alt fa-fw me-2"></i>Resume
-                </Link>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="blog-home.html">
-                  <i className="fas fa-blog fa-fw me-2"></i>Blog
                 </a>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/contact">
+                <a 
+                  className="nav-link" 
+                  href="#contact"
+                  onClick={(e) => {
+                    e.preventDefault(); 
+                    scrollToSection(contactRef, 'contact');
+                  }}
+                >
                   <i className="fas fa-envelope-open-text fa-fw me-2"></i>
                   Contact
-                </Link>
+                </a>
               </li>
-              <li className="nav-item dropdown">
+              {/* <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
                   href="#"
@@ -170,7 +210,7 @@ function Header() {
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li> */}
             </ul>
 
             <div className="my-2">

@@ -1,8 +1,9 @@
 import React from "react";
-import Router from "./routes/index";
+import { BrowserRouter as Router } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
-  return <Router />;
+  return <Router><MainLayout /></Router>;
 }
 
 export default App;
