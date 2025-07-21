@@ -1,9 +1,8 @@
-import React, {useEffect} from "react";
+import {useEffect} from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function App() {
     useEffect(() => {
@@ -12,7 +11,7 @@ function App() {
       once: true,
       easing: "ease-in-out",
     });
-  });
+  }, []);
 
   return <Router><MainLayout /></Router>;
 }

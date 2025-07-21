@@ -1,4 +1,3 @@
-import {useEffect, useState} from "react";
 import skills from "../data/skills";
 import projects from "../data/project";
 import education from "../data/education";
@@ -7,6 +6,16 @@ import "../styles/timeline.css";
 import { Typewriter } from "react-simple-typewriter";
 
 function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
+  // Icon Data
+  const socialLink = [
+    { label: 'github', link: 'https://github.com/Phantuan2004', icon: 'fab fa-github' },
+    { label: 'facebook', link: 'https://www.facebook.com/phantuan204', icon: 'fab fa-facebook' },
+    { label: 'linkedin', link: 'https://www.linkedin.com/in/tu%E1%BA%A5n-phan-56988533b/', icon: 'fab fa-linkedin' },
+    { label: 'telegram', link: 'https://t.me/phantuan204', icon: 'fa-brands fa-telegram' },
+    { label: 'instagram', link: '#', icon: 'fab fa-instagram' },
+    { label: 'x', link: '#', icon: 'fa-brands fa-x-twitter' },
+  ]
+
   return (
     <>
       {/* About Me Section */}
@@ -251,48 +260,13 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
               Want to get connected? Follow me on the social channels below.
             </p>
             <ul className="list-inline mb-0">
-              <li className="list-inline-item mb-3">
-                <a className="twitter" href="#">
-                  <i className="fa-brands fa-x-twitter fa-fw fa-lg"></i>
-                </a>
-              </li>
-
-              <li className="list-inline-item mb-3">
-                <a className="linkedin" href="#">
-                  <i className="fa-brands fa-linkedin-in fa-fw fa-lg"></i>
-                </a>
-              </li>
-              <li className="list-inline-item mb-3">
-                <a className="github" href="#">
-                  <i className="fa-brands fa-github-alt fa-fw fa-lg"></i>
-                </a>
-              </li>
-              <li className="list-inline-item">
-                <a className="instagram" href="#">
-                  <i className="fa-brands fa-instagram fa-fw fa-lg"></i>
-                </a>
-              </li>
-              <li className="list-inline-item mb-3">
-                <a className="stack-overflow" href="#">
-                  <i className="fa-brands fa-stack-overflow fa-fw fa-lg"></i>
-                </a>
-              </li>
-              <li className="list-inline-item mb-3">
-                <a className="medium" href="#">
-                  <i className="fa-brands fa-medium-m fa-fw fa-lg"></i>
-                </a>
-              </li>
-              <li className="list-inline-item mb-3">
-                <a className="codepen" href="#">
-                  <i className="fa-brands fa-codepen fa-fw fa-lg"></i>
-                </a>
-              </li>
-
-              <li className="list-inline-item mb-3">
-                <a className="facebook" href="#">
-                  <i className="fa-brands fa-facebook-f fa-fw fa-lg"></i>
-                </a>
-              </li>
+              {socialLink.map((social, index) => (
+                <li key={index} className="list-inline-item mb-3">
+                  <a className={social.label} href={social.link}>
+                    <i className={`${social.icon} contact-social-icon`}></i>
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
