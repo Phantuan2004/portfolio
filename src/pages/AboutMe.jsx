@@ -1,12 +1,15 @@
 import {useEffect, useState} from "react";
 import skills from "../data/skills";
 import projects from "../data/project";
+import education from "../data/education";
+import experience from "../data/experience";
 import "../styles/timeline.css";
 import { Typewriter } from "react-simple-typewriter";
 
 function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
   return (
     <>
+      {/* About Me Section */}
       <section id="about" ref={aboutRef} className="about-me-section p-3 p-lg-5 theme-bg-light">
         <div className="container">
           <div className="profile-teaser row">
@@ -55,6 +58,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
         </div>
       </section>
 
+      {/* Skills & Proficiency */}
       <section data-aos="fade-up" data-aos-delay="500" id="skills" ref={skillsRef} className="overview-section p-3 p-lg-5">
         <div className="container">
           <h2 className="section-title font-weight-bold mb-3">What I do</h2>
@@ -106,6 +110,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
         <hr />
       </div>
 
+      {/* Projects Section */}
       <section data-aos="fade-up" id="projects" ref={projectsRef} className="featured-section p-3 p-lg-5">
         <div className="container">
           <h2 className="section-title font-weight-bold mb-5">
@@ -164,7 +169,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
         <hr />
       </div>
 
-      {/* Resume Section - Fixed */}
+      {/* Resume Section */}
       <section data-aos="fade-up" id="resume" ref={resumeRef} className="resume-section p-3 p-lg-5">
         <div className="container">
           <h2 className="resume-title">Resume</h2>
@@ -177,28 +182,23 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
                 Education
               </h3>
               <div className="resume-column resume-left">
-                
-                <div className="resume-item">
-                  <h4>Master of Computer Science</h4>
-                  <h5>2018 - 2020</h5>
-                  <p><em>Stanford University, CA</em></p>
-                  <p>Specialized in Machine Learning and Artificial Intelligence. Graduated with honors (GPA: 3.8/4.0). Completed advanced coursework in neural networks, deep learning, and natural language processing.</p>
-                </div>
-
-                <div className="resume-item">
-                  <h4>Bachelor of Software Engineering</h4>
-                  <h5>2014 - 2018</h5>
-                  <p><em>Massachusetts Institute of Technology, MA</em></p>
-                  <p>Focused on software development, algorithms, and system design. Dean's List for 6 semesters. Senior capstone project involved developing a distributed computing framework.</p>
-                </div>
-
-                <div className="resume-item">
-                  <h4>High School Diploma</h4>
-                  <h5>2010 - 2014</h5>
-                  <p><em>Tech Preparatory High School, CA</em></p>
-                  <p>Valedictorian with focus on Mathematics and Computer Science. Founded and led the school's first programming club.</p>
-                </div>
-
+                {education.map((edu, index) => (
+                  <div key={index} className="resume-item">
+                    <h4>{edu.degree}</h4>
+                    <h5>{edu.year}</h5>
+                    <p><em>{edu.school}</em></p>
+                    <p>{edu.desc}</p>
+                    <ul>
+                      {Array.isArray(edu.descDetail) ? (
+                        edu.descDetail.map((detail, detailIndex) => (
+                          <li key={detailIndex}>{detail}</li>
+                        ))
+                      ) : (
+                        <p>{edu.descDetail}</p>
+                      )}
+                    </ul>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -209,43 +209,22 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
                 Professional Experience
               </h3>
               <div className="resume-column resume-left">
-                
-                <div className="resume-item">
-                  <h4>Senior Software Engineer</h4>
-                  <h5>2022 - Present</h5>
-                  <p><em>Google Inc., Mountain View, CA</em></p>
-                  <ul>
-                    <li>Lead development of scalable web applications serving 10M+ daily active users</li>
-                    <li>Mentor team of 8 junior developers and drive technical architecture decisions</li>
-                    <li>Improved system performance by 40% through code optimization and caching strategies</li>
-                    <li>Implemented microservices architecture reducing deployment time by 60%</li>
-                  </ul>
-                </div>
-
-                <div className="resume-item">
-                  <h4>Software Engineer</h4>
-                  <h5>2020 - 2022</h5>
-                  <p><em>Facebook (Meta), Menlo Park, CA</em></p>
-                  <ul>
-                    <li>Developed and maintained core platform features used by billions of users</li>
-                    <li>Built real-time messaging system handling 10M+ messages per day</li>
-                    <li>Reduced page loading time by 35% across main platform through optimization</li>
-                    <li>Optimized database queries reducing server costs by $2M annually</li>
-                  </ul>
-                </div>
-
-                <div className="resume-item">
-                  <h4>Junior Software Developer</h4>
-                  <h5>2018 - 2020</h5>
-                  <p><em>StartupXYZ, San Francisco, CA</em></p>
-                  <ul>
-                    <li>Built company's first mobile application from scratch using React Native</li>
-                    <li>Implemented CI/CD pipeline improving deployment efficiency by 50%</li>
-                    <li>Developed RESTful APIs and integrated third-party services</li>
-                    <li>Contributed to 50% increase in user engagement through feature development</li>
-                  </ul>
-                </div>
-
+                {experience.map((exp, index) => (
+                  <div key={index} className="resume-item">
+                    <h4>{exp.position}</h4>
+                    <h5>{exp.year}</h5>
+                    <p><em>{exp.company}</em></p>
+                    <ul>
+                      {Array.isArray(exp.desc) ? (
+                        exp.desc.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))
+                      ) : (
+                        <li>{exp.desc}</li>
+                      )}
+                    </ul>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -256,6 +235,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
         <hr />
       </div>
 
+      {/* Contact Section */}
       <section data-aos="fade-up" className="cta-section theme-bg-light py-5 pb-0">
         <div className="container text-center single-col-max-width">
           <h2 id="contact" ref={contactRef} className="heading">Contact</h2>
