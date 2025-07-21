@@ -1,51 +1,70 @@
 import {useEffect, useState} from "react";
-import {NavLink, useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
+import {useTranslation} from "react-i18next";
+import Select from 'react-select';
 
 function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
+  // Navbar data 
+   const navbar = [
+    { name: 'about', label: 'About Me', link: '#about', ref: aboutRef, icon: 'fas fa-user fa-fw me-2' },
+    { name: 'skills', label: 'Skills', link: '#skills', ref: skillsRef, icon: 'fas fa-cogs fa-fw me-2' },
+    { name: 'projects', label: 'Projects', link: '#projects', ref: projectsRef, icon: 'fas fa-laptop-code fa-fw me-2' },
+    { name: 'resume', label: 'Resume', link: '#resume', ref: resumeRef, icon: 'fas fa-file-alt fa-fw me-2' },
+    { name: 'contact', label: 'Contact', link: '#contact', ref: contactRef, icon: 'fas fa-envelope-open-text fa-fw me-2' },
+  ];
+
+  // Icon Data
+  const socials = [
+    { label: 'github', link: 'https://github.com/Phantuan2004', icon: 'fab fa-github' },
+    { label: 'facebook', link: 'https://www.facebook.com/phantuan204', icon: 'fab fa-facebook' },
+    { label: 'linkedin', link: 'https://www.linkedin.com/in/tu%E1%BA%A5n-phan-56988533b/', icon: 'fab fa-linkedin' },
+    { label: 'telegram', link: 'https://t.me/phantuan204', icon: 'fa-brands fa-telegram' },
+    { label: 'instagram', link: '#', icon: 'fab fa-instagram' },
+  ]
+
+   // Đường dẫn ảnh cờ trong public
+  const flagOptions = [
+    {
+      value: 'vi',
+      label: 'Tiếng Việt',
+      icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/800px-Flag_of_Vietnam.svg.png',
+    },
+    {
+      value: 'en',
+      label: 'English',
+      icon: 'https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1280px-Flag_of_the_United_Kingdom.svg.png',
+    },
+  ];
+
+  const { i18n} = useTranslation();
+
+  const changeLanguage = (option) => {
+    i18n.changeLanguage(option.value);
+  };
+
+  // State
   const [isDark, setIsDark] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Khi component mount, lấy trạng thái từ cookie và set state
-  useEffect(() => {
-    const mode = Cookies.get("mode");
-    if (mode === "dark-mode") {
-      setIsDark(true);
-      document.body.classList.add("dark-mode");
-      console.log("Cookie: dark mode");
-    }else {
-      setIsDark(false);
-      document.body.classList.remove("dark-mode");
-      console.log("Cookie: light mode");
+  // Khi thay đổi trang
+  const updateSection = (name) => {
+    setActiveSection(name);
+    navigate(`#${name}`, { replace: true });
+  };
+
+  // Khi click vào menu
+  const handleMenuClick = (ref, name) => (e) => {
+    e.preventDefault();
+    if (ref?.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+      updateSection(name);
     }
-  }, []);
+  };
 
-  // Theo dõi URL changes để update active section
-  useEffect(() => {
-    let hash = location.hash.replace('#', '');
-    if (!hash || hash === '') {
-      hash = 'about';
-      navigate(`#about`, { replace: true });
-    }
-    setActiveSection(hash);
-  }, [location, navigate]);
-
-  // Component mount - scroll to about section mặc định
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!location.hash && aboutRef?.current) {
-        aboutRef.current.scrollIntoView({ behavior: 'smooth' });
-        navigate('#about', { replace: true });
-        setActiveSection('about');
-      }
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Khi toggle thay đổi
+  // Khi toggle thay đổi mode
   const handleChange = (e) => {
     const checked = e.target.checked;
     setIsDark(checked);
@@ -70,31 +89,86 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
     }
   };
 
-  // Function kiểm tra section active
-  const isActive = (sectionName) => {
-    return activeSection === sectionName;
+  // Function đổi ngôn ngữ
+  const {t} = useTranslation();
+
+  // Khi component mount, lấy trạng thái từ cookie và set state
+  useEffect(() => {
+    const mode = Cookies.get("mode");
+    if (mode === "dark-mode") {
+      setIsDark(true);
+      document.body.classList.add("dark-mode");
+      console.log("Cookie: dark mode");
+    }else {
+      setIsDark(false);
+      document.body.classList.remove("dark-mode");
+      console.log("Cookie: light mode");
+    }
+
+    // Scroll mặc định nếu không có hash
+    const timer = setTimeout(() => {
+      if (!location.hash && aboutRef?.current) {
+        aboutRef.current.scrollIntoView({ behavior: 'smooth' });
+        navigate('#about', { replace: true });
+        setActiveSection('about');
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Khi URL thay đổi
+  useEffect(() => {
+    let hash = location.hash.replace('#', '');
+    if (!hash || hash === '') {
+      hash = 'about';
+      navigate(`#about`, { replace: true });
+    }
+    setActiveSection(hash);
+  }, [location, navigate]);
+
+   // Function scroll spy
+  useEffect(() => {
+    const sections = [
+    { ref: aboutRef, name: 'about' },
+    { ref: skillsRef, name: 'skills' },
+    { ref: projectsRef, name: 'projects' },
+    { ref: resumeRef, name: 'resume' },
+    { ref: contactRef, name: 'contact' },
+  ];
+
+  const observerOptions = {
+    root: null, // viewport
+    rootMargin: '0px',
+    threshold: 0.6, // 60% section visible
   };
 
-  <style jsx>{`
-    .nav-link.active {
-      font-weight: bold;
-      color: #007bff !important;
-      background-color: rgba(0, 123, 255, 0.1);
-      border-radius: 5px;
-      text-decoration: none;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const matched = sections.find(s => s.ref.current === entry.target);
+        if (matched) {
+          setActiveSection(matched.name);
+          navigate(`#${matched.name}`, { replace: true });
+        }
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(({ ref }) => {
+    if (ref?.current) {
+      observer.observe(ref.current);
     }
-    
-    .nav-link {
-      transition: all 0.3s ease;
-      padding: 8px 12px;
-      margin: 2px 0;
-    }
-    
-    .nav-link:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 5px;
-    }
-  `}</style>
+  });
+
+  return () => {
+    sections.forEach(({ ref }) => {
+      if (ref?.current) {
+        observer.unobserve(ref.current);
+      }
+    });
+  };
+  }, [aboutRef, skillsRef, projectsRef, contactRef, resumeRef, navigate]);
 
   return (
     <header className="header text-center">
@@ -130,131 +204,46 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
                 Welcome to my personal website!
               </div>
               <ul className="social-list list-inline py-2 mx-auto">
-                <li className="list-inline-item">
-                  <a href="#" aria-label="Twitter">
-                    <i className="fa-brands fa-x-twitter fa-fw"></i>
-                  </a>
+                {socials.map((social, index) => (
+                  <li key={index} className="list-inline-item">
+                    <a href={social.link} aria-label={social.label}>
+                      <i className={social.icon}></i>
+                    </a>
                 </li>
-                <li className="list-inline-item">
-                  <a href="#" aria-label="LinkedIn">
-                    <i className="fa-brands fa-linkedin-in fa-fw"></i>
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a href="#" aria-label="GitHub">
-                    <i className="fa-brands fa-github-alt fa-fw"></i>
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a href="#" aria-label="Stack Overflow">
-                    <i className="fa-brands fa-stack-overflow fa-fw"></i>
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a href="#" aria-label="CodePen">
-                    <i className="fa-brands fa-codepen fa-fw"></i>
-                  </a>
-                </li>
+                ))}
               </ul>
+              {/* Language Switcher - Top Right */}
+              <div className="language-switcher-fixed">
+                <Select
+                  options={flagOptions}
+                  value={flagOptions.find(opt => opt.value === i18n.language) || flagOptions[0]}
+                  onChange={changeLanguage}
+                  isSearchable={false}
+                  menuPlacement="bottom"
+                  classNamePrefix="langselect"
+                  formatOptionLabel={opt => (
+                    <div className="language-option-label">
+                      <img src={opt.icon} alt="flag" className="language-flag" />
+                      <span className="text">{opt.label}</span>
+                    </div>
+                  )}
+                />
+              </div>
               <hr />
             </div>
 
             <ul className="navbar-nav flex-column text-start">
-              <li className="nav-item">
-                <a
-                  href="#about"
-                  className={`nav-link ${isActive("about") ? "active" : ""}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection(aboutRef, "about");
-                  }}
-                >
-                  <i className="fas fa-user fa-fw me-2"></i>About Me
-                </a>
-              </li>
-              <li className="nav-item">
-                <a 
-                  className={`nav-link ${isActive("skills") ? "active" : ""}`} 
-                  href="#skills"
-                  onClick={(e) => {
-                    e.preventDefault(); 
-                    scrollToSection(skillsRef, 'skills');
-                  }}
-                >
-                  <i className="fas fa-cogs fa-fw me-2"></i>Skills
-                </a>
-              </li>
-              <li className="nav-item">
-                <a 
-                  className={`nav-link ${isActive("projects") ? "active" : ""}`} 
-                  href="#projects"
-                  onClick={(e) => {
-                    e.preventDefault(); 
-                    scrollToSection(projectsRef, 'projects');
-                  }}
-                >
-                  <i className="fas fa-laptop-code fa-fw me-2"></i>Projects
-                </a>
-              </li>
-              <li className="nav-item">
-                <a 
-                  className={`nav-link ${isActive("resume") ? "active" : ""}`} 
-                  href="#resume"
-                  onClick={(e) => {
-                    e.preventDefault(); 
-                    scrollToSection(resumeRef, 'resume');
-                  }}
-                >
-                  <i className="fas fa-file-alt fa-fw me-2"></i>Resume
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className={`nav-link ${isActive("contact") ? "active" : ""}`} 
-                  href="#contact"
-                  onClick={(e) => {
-                    e.preventDefault(); 
-                    scrollToSection(contactRef, 'contact');
-                  }}
-                >
-                  <i className="fas fa-envelope-open-text fa-fw me-2"></i>
-                  Contact
-                </a>
-              </li>
-              {/* <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i className="fas fa-cogs fa-fw me-2"></i>More Pages
-                </a>
-                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li>
-                    <a className="dropdown-item" href="project.html">
-                      Project Page
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="blog-home.html">
-                      Blog Home 1
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="blog-home-alt.html">
-                      Blog Home 2
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="blog-post.html">
-                      Blog Post
-                    </a>
-                  </li>
-                </ul>
-              </li> */}
+              {navbar.map((nav, index) => (
+                <li key={index} className="nav-item">
+                  <a
+                    href={nav.link}
+                    className={`nav-link ${activeSection === nav.name ? "active" : ""}`}
+                    onClick={handleMenuClick(nav.ref, nav.name)}
+                  >
+                    <i className={nav.icon}></i>{t(`${nav.name}`)}
+                  </a>
+                </li>
+              ))}
             </ul>
 
             <div className="my-2">

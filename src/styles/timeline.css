@@ -205,3 +205,113 @@ html[data-theme="dark"] .resume-item::before,
     font-size: 1.3rem;
   }
 }
+
+/* Contact font size icon about me*/
+.contact-social-icon {
+  font-size: 1.4rem;
+  margin: 0 2px;
+}
+
+/* Css nút chuyển đổi ngôn ngữ */
+.language-option-label {
+  display: flex;
+  align-items: center;
+}
+
+.language-option-label:hover {
+  cursor: pointer;
+}
+
+.language-flag {
+  width: 20px;
+  height: 14px;
+  margin-right: 8px;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid #eee;
+}
+
+.text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+body.dark-mode .language-switcher-fixed .langselect__input,
+html[data-theme="dark"] .language-switcher-fixed .langselect__input,
+[data-bs-theme="dark"] .language-switcher-fixed .langselect__input,
+.dark .language-switcher-fixed .langselect__input {
+  color: #fff !important;
+}
+
+body.dark-mode .language-switcher-fixed .langselect__placeholder,
+html[data-theme="dark"] .language-switcher-fixed .langselect__placeholder,
+[data-bs-theme="dark"] .language-switcher-fixed .langselect__placeholder,
+.dark .language-switcher-fixed .langselect__placeholder {
+  color: #fff !important;
+  opacity: 0.8;
+}
+
+body.dark-mode .language-switcher-fixed .language-option-label span,
+html[data-theme="dark"] .language-switcher-fixed .language-option-label span,
+[data-bs-theme="dark"] .language-switcher-fixed .language-option-label span,
+.dark .language-switcher-fixed .language-option-label span {
+  color: #fff !important;
+}
+/* Dark mode cho language switcher react-select */
+body.dark-mode .language-switcher-fixed,
+html[data-theme="dark"] .language-switcher-fixed,
+[data-bs-theme="dark"] .language-switcher-fixed,
+.dark .language-switcher-fixed {
+  background: #23272f !important;
+  border-color: #333a45 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+body.dark-mode .language-switcher-fixed .langselect__control,
+html[data-theme="dark"] .language-switcher-fixed .langselect__control,
+[data-bs-theme="dark"] .language-switcher-fixed .langselect__control,
+.dark .language-switcher-fixed .langselect__control,
+body.dark-mode .language-switcher-fixed .langselect__menu,
+html[data-theme="dark"] .language-switcher-fixed .langselect__menu,
+[data-bs-theme="dark"] .language-switcher-fixed .langselect__menu,
+.dark .language-switcher-fixed .langselect__menu,
+body.dark-mode .language-switcher-fixed .langselect__option,
+html[data-theme="dark"] .language-switcher-fixed .langselect__option,
+[data-bs-theme="dark"] .language-switcher-fixed .langselect__option,
+.dark .language-switcher-fixed .langselect__option {
+  background: #23272f !important;
+  color: #fff !important;
+}
+body.dark-mode .language-switcher-fixed .langselect__option--is-focused,
+html[data-theme="dark"] .language-switcher-fixed .langselect__option--is-focused,
+[data-bs-theme="dark"] .language-switcher-fixed .langselect__option--is-focused,
+.dark .language-switcher-fixed .langselect__option--is-focused {
+  background: #2d3542 !important;
+  color: #64b5f6 !important;
+}
+body.dark-mode .language-switcher-fixed .langselect__option--is-selected,
+html[data-theme="dark"] .language-switcher-fixed .langselect__option--is-selected,
+[data-bs-theme="dark"] .language-switcher-fixed .langselect__option--is-selected,
+.dark .language-switcher-fixed .langselect__option--is-selected {
+  background: #1e3a5f !important;
+  color: #64b5f6 !important;
+  border-left: 3px solid #64b5f6;
+}
+body.dark-mode .language-switcher-fixed .langselect__single-value,
+html[data-theme="dark"] .language-switcher-fixed .langselect__single-value,
+[data-bs-theme="dark"] .language-switcher-fixed .langselect__single-value,
+.dark .language-switcher-fixed .langselect__single-value,
+body.dark-mode .language-switcher-fixed .langselect__input,
+html[data-theme="dark"] .language-switcher-fixed .langselect__input,
+[data-bs-theme="dark"] .language-switcher-fixed .langselect__input,
+.dark .language-switcher-fixed .langselect__input,
+body.dark-mode .language-switcher-fixed .langselect__placeholder,
+html[data-theme="dark"] .language-switcher-fixed .langselect__placeholder,
+[data-bs-theme="dark"] .language-switcher-fixed .langselect__placeholder,
+.dark .language-switcher-fixed .langselect__placeholder,
+body.dark-mode .language-switcher-fixed .language-option-label span,
+html[data-theme="dark"] .language-switcher-fixed .language-option-label span,
+[data-bs-theme="dark"] .language-switcher-fixed .language-option-label span,
+.dark .language-switcher-fixed .language-option-label span {
+  color: #fff !important;
+}
