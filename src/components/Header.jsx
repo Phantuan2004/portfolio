@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
 import {useTranslation} from "react-i18next";
-import Select from 'react-select';
 
 function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
   // Navbar data 
@@ -23,31 +22,44 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
     { label: 'instagram', link: '#', icon: 'fab fa-instagram' },
   ]
 
-   // Đường dẫn ảnh cờ trong public
+   // Language options - chỉ Việt và Anh
   const flagOptions = [
     {
       value: 'vi',
-      label: 'Tiếng Việt',
+      label: 'VN',
+      fullLabel: 'Tiếng Việt',
       icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/800px-Flag_of_Vietnam.svg.png',
     },
     {
       value: 'en',
-      label: 'English',
+      label: 'EN',
+      fullLabel: 'English',
       icon: 'https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1280px-Flag_of_the_United_Kingdom.svg.png',
     },
   ];
 
-  const { i18n} = useTranslation();
-
-  const changeLanguage = (option) => {
-    i18n.changeLanguage(option.value);
-  };
+  const { i18n, t} = useTranslation();
 
   // State
   const [isDark, setIsDark] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Language functions
+  const changeLanguage = (langCode) => {
+    i18n.changeLanguage(langCode);
+    setIsLangDropdownOpen(false);
+  };
+
+  const getCurrentLanguage = () => {
+    return flagOptions.find(opt => opt.value === i18n.language) || flagOptions[0];
+  };
+
+  const toggleLangDropdown = () => {
+    setIsLangDropdownOpen(!isLangDropdownOpen);
+  };
 
   // Khi thay đổi trang
   const updateSection = (name) => {
@@ -89,9 +101,6 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
     }
   };
 
-  // Function đổi ngôn ngữ
-  const {t} = useTranslation();
-
   // Khi component mount, lấy trạng thái từ cookie và set state
   useEffect(() => {
     const mode = Cookies.get("mode");
@@ -115,6 +124,18 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
     }, 100);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.compact-lang-dropdown')) {
+        setIsLangDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
   // Khi URL thay đổi
@@ -212,23 +233,43 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
                 </li>
                 ))}
               </ul>
-              {/* Language Switcher - Top Right */}
-              <div className="language-switcher-fixed">
-                <Select
-                  options={flagOptions}
-                  value={flagOptions.find(opt => opt.value === i18n.language) || flagOptions[0]}
-                  onChange={changeLanguage}
-                  isSearchable={false}
-                  menuPlacement="bottom"
-                  classNamePrefix="langselect"
-                  formatOptionLabel={opt => (
-                    <div className="language-option-label">
-                      <img src={opt.icon} alt="flag" className="language-flag" />
-                      <span className="text">{opt.label}</span>
-                    </div>
-                  )}
-                />
+              
+              {/* Compact Language Dropdown */}
+              <div className="compact-lang-dropdown">
+                <button 
+                  className="compact-dropdown-btn" 
+                  onClick={toggleLangDropdown}
+                  type="button"
+                >
+                  <img 
+                    src={getCurrentLanguage().icon} 
+                    alt="flag" 
+                    className="language-flag" 
+                  />
+                  <span className="lang-text">{getCurrentLanguage().label}</span>
+                  <span className={`dropdown-arrow ${isLangDropdownOpen ? 'open' : ''}`}>▾</span>
+                </button>
+                
+                {isLangDropdownOpen && (
+                  <div className="compact-dropdown-content">
+                    {flagOptions.map((option) => (
+                      <div
+                        key={option.value}
+                        className="compact-dropdown-item"
+                        onClick={() => changeLanguage(option.value)}
+                      >
+                        <img 
+                          src={option.icon} 
+                          alt="flag" 
+                          className="language-flag" 
+                        />
+                        <span className="lang-text">{option.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
+              
               <hr />
             </div>
 
