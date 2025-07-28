@@ -4,6 +4,8 @@ import education from "../data/education";
 import experience from "../data/experience";
 import "../styles/timeline.css";
 import { Typewriter } from "react-simple-typewriter";
+// Import i18next
+import { useTranslation } from "react-i18next";
 
 function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
   // Icon Data
@@ -16,6 +18,8 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
     { label: 'x', link: '#', icon: 'fa-brands fa-x-twitter' },
   ]
 
+  const { t } = useTranslation();
+
   return (
     <>
       {/* About Me Section */}
@@ -23,33 +27,19 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
         <div className="container">
           <div className="profile-teaser row">
             <div data-aos="fade-up" data-aos-delay="0" className="col">
-              <h2 className="name font-weight-bold mb-1">Simon Doe</h2>
+              <h2 className="name font-weight-bold mb-1">{t('about.name')}</h2>
               <div className="tagline mb-3">
-                <Typewriter words={["Frontend Developer", "Backend Developer", "Fullstack Developer"]} loop={0} cursor cursorStyle="|" typeSpeed={70} deleteSpeed={50} delaySpeed={1000} />
+                <Typewriter words={["Frontend Developer", "Backend Developer", "Fullstack Developer"]} loop={0} cursor cursorStyle="|" typeSpeed={90} deleteSpeed={90} delaySpeed={1000} />
                 </div>
               <div className="bio mb-4">
-                I'm a software engineer specialised in frontend and backend
-                development for complex scalable web apps. I write about
-                software development on{" "}
-                <a className="text-link" to="/blog">
-                  my blog
-                </a>
-                . Want to know how I may help your project? Check out my project{" "}
-                <a className="text-link" to="/portfolio">
-                  portfolio
-                </a>{" "}
-                and{" "}
-                <a className="text-link" to="/resume">
-                  online resume
-                </a>
-                .
+                {t('about.bio')}
               </div>
               <div className="mb-4">
-                <a className="btn btn-primary me-2 mb-3" href="#">
+                <a className="btn btn-primary me-2 mb-3" href="#resume" onClick={(e) => {e.preventDefault(); resumeRef.current.scrollIntoView({ behavior: "smooth" });}}>
                   <i className="fas fa-arrow-alt-circle-right me-2"></i>
                   <span className="d-none d-md-inline">View</span> Portfolio
                 </a>
-                <a className="btn btn-secondary mb-3" href="#resume" onClick={(e) => {e.preventDefault(); resumeRef.current.scrollIntoView({ behavior: "smooth" });}}>
+                <a className="btn btn-secondary mb-3" href="#">
                   <i className="fas fa-file-alt me-2"></i>
                   <span className="d-none d-md-inline">View</span> Profile
                 </a>

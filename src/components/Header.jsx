@@ -124,7 +124,7 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [ location, navigate, aboutRef ]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -196,7 +196,7 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
       <div className="force-overflow">
         <h1 className="blog-name pt-lg-4 mb-0">
           <a className="no-text-decoration" href="#about" onClick={(e) => {e.preventDefault(); scrollToSection(aboutRef, 'about');}}>
-            Simon Doe
+            {t("intro.name")}
           </a>
         </h1>
 
@@ -221,8 +221,7 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
                 alt="image"
               />
               <div className="bio mb-3">
-                Hi, my name is Simon Doe and I'm a senior software engineer.
-                Welcome to my personal website!
+                {t("intro.bio")}
               </div>
               <ul className="social-list list-inline py-2 mx-auto">
                 {socials.map((social, index) => (
@@ -281,27 +280,14 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
                     className={`nav-link ${activeSection === nav.name ? "active" : ""}`}
                     onClick={handleMenuClick(nav.ref, nav.name)}
                   >
-                    <i className={nav.icon}></i>{t(`${nav.name}`)}
+                    <i className={nav.icon}></i>{t(`navbar.${nav.name}`)}
                   </a>
                 </li>
               ))}
             </ul>
 
-            <div className="my-2">
-              <a
-                className="btn btn-primary"
-                href="#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection(contactRef, 'contact');
-                }}
-              >
-                <i className="fas fa-paper-plane me-2"></i>Hire Me
-              </a>
-            </div>
-
             <div className="dark-mode-toggle text-center w-100">
-              <hr className="mb-4" />
+              <hr />
               <h4 className="toggle-name mb-3 ">
                 <i className="fas fa-adjust me-1"></i>{isDark ? "Light Mode" : "Dark Mode"}
               </h4>

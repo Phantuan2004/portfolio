@@ -241,7 +241,6 @@ html[data-theme="dark"] .resume-item::before,
 .compact-lang-dropdown {
   position: relative;
   display: inline-block;
-  margin-bottom: 1rem;
 }
 
 .compact-dropdown-btn {

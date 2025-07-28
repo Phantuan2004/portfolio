@@ -1,7 +1,20 @@
 {
-    "about": "Về tôi",
-    "skills": "Kỹ năng",
-    "projects": "Dự án",
-    "resume": "Tóm tắt",
-    "contact": "Liên hệ"
+    "navbar": {
+        "about": "Về tôi",
+        "skills": "Kỹ năng",
+        "projects": "Dự án",
+        "resume": "Tóm tắt",
+        "contact": "Liên hệ",
+        "Hire Me": "Tuyển dụng tôi"
+    },
+
+    "intro": {
+        "name": "Phan Hoàng Tuấn",
+        "bio": "Xin chào, tôi là Tuấn - Fresher PHP Laravel Developer. Chào mừng bạn đến với trang web của tôi."
+    },
+
+    "about": {
+        "name": "Phan Hoàng Tuấn",
+        "bio": "Tôi là một lập trình viên PHP, tập trung phát triển backend với Laravel, MySQL và API RESTful. Tôi yêu thích việc xây dựng các ứng dụng web có khả năng mở rộng và viết mã sạch, dễ bảo trì. Luôn mong muốn học hỏi công nghệ mới và đóng góp vào những dự án ý nghĩa. Mục tiêu của tôi là phát triển trở thành một kỹ sư backend toàn diện."
+    }
 }

@@ -1,7 +1,20 @@
 {
-    "about": "About Me",
-    "skills": "Skills",
-    "projects": "Projects",
-    "resume": "Resume",
-    "contact": "Contact"
+    "navbar": {
+        "about": "About Me",
+        "skills": "Skills",
+        "projects": "Projects",
+        "resume": "Resume",
+        "contact": "Contact",
+        "Hire Me": "Hire Me"
+    },
+
+    "intro": {
+        "name": "Phan Hoang Tuan",
+        "bio": "Hello, I'm Tuan - Fresher PHP Laravel Developer. Nice to meet you at my website."
+    },
+
+    "about": {
+        "name": "Phan Hoang Tuan",
+        "bio": "I'm a PHP developer with a strong focus on backend development using Laravel, MySQL and API RESTful. I enjoy building scalable web applications and writing clean, maintainable code. I'm always eager to learn new technologies and contribute to meaningful projects. My goal is to grow into a well-rounded backend engineer."
+    }
 }
