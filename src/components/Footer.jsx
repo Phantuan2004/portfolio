@@ -1,14 +1,17 @@
+import { useTranslation } from "react-i18next";
 export default function Footer() {
+  const { t } = useTranslation();
+  
   return (
     <div>
-      <footer className="footer text-center py-4">
-        <small className="copyright">
-          Template Copyright &copy;{" "}
-          <a href="https://themes.3rdwavemedia.com/" target="_blank">
-            3rd Wave Media
-          </a>
-        </small>
-      </footer>
+  <footer className="footer text-center py-4">
+    <div className="copyright">
+      <p className="mb-1">
+        Copyright © {new Date().getFullYear()} {t('footer.copyright')}
+      </p>
     </div>
+  </footer>
+</div>
+
   );
 }
