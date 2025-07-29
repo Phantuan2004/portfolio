@@ -16,5 +16,36 @@
     "about": {
         "name": "Phan Hoang Tuan",
         "bio": "I'm a PHP developer with a strong focus on backend development using Laravel, MySQL and API RESTful. I enjoy building scalable web applications and writing clean, maintainable code. I'm always eager to learn new technologies and contribute to meaningful projects. My goal is to grow into a well-rounded backend engineer."
+    },
+
+    "skills": {
+        "title": "What I do",
+        "tech": "I have over 6 months of hands-on experience interning at startups focusing on PHP Laravel, RESTful APIs, and MySQL. Here is a quick overview of the skill set and key technologies I use. Want to find out more about my experience? Check out my "
+    },
+
+    "projects": {
+        "title": "Featured Projects",
+        "viewDetail": "View Case Study"
+    },
+
+    "resume": {
+        "title": "Resume",
+        "education": "Education",
+        "experience": "Professional Experience"
+    },
+
+    "contact": {
+        "title": "Contact",
+        "desc1": "Got a question or just want to say hi? Drop me a message below or email me at ",
+        "desc2": "You can also find me on the social platforms below.",
+        "formTitle": "Get In Touch",
+        "formName": "Name",
+        "formEmail": "Email",
+        "formMessage": "Enter your message",
+        "formSubmit": "Send Now"
+    },
+
+    "footer": {
+        "copyright": " Phan Hoang Tuan. All rights reserved."
     }
 }
