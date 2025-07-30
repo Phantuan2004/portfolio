@@ -49,8 +49,8 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
             <div className="col-md-5 col-lg-5">
               <img
                 className="profile-image img-fluid mb-3 mb-lg-0 me-md-0"
-                src="assets/images/profile-lg.jpg"
-                alt=""
+                src="assets/images/avatar.jpg"
+                alt="image"
               />
             </div>
           </div>

@@ -217,7 +217,7 @@ function Header({aboutRef, skillsRef, projectsRef, contactRef, resumeRef}) {
             <div className="profile-section pt-3 pt-lg-0">
               <img
                 className="profile-image mb-3 rounded-circle mx-auto"
-                src="assets/images/profile.png"
+                src="assets/images/avatar.jpg"
                 alt="image"
               />
               <div className="bio mb-3">
