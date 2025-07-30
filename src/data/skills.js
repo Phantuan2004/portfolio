@@ -6,10 +6,10 @@ const skills = [
         colors: ["#8892BF", "#F4645F"]
     },
     {
-        icon: ["fa-solid fa-database"],
+        icon: ["fa-solid fa-database", "devicon-mysql-plain", "devicon-postgresql-plain"],
         title: "Database",
         desc: "MySQL, PostgreSQL",
-        color: "#00A1D6"
+        color: ["#00758F", "#336791", "#336791"]
     },
     {
         icon: ["fa-brands fa-python"],

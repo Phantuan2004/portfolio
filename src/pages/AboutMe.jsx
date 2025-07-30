@@ -29,7 +29,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
             <div data-aos="fade-up" data-aos-delay="0" className="col">
               <h2 className="name font-weight-bold mb-1">{t('about.name')}</h2>
               <div className="tagline mb-3">
-                <Typewriter words={["Frontend Developer", "Backend Developer", "Fullstack Developer"]} loop={0} cursor cursorStyle="|" typeSpeed={90} deleteSpeed={90} delaySpeed={1000} />
+                <Typewriter words={["Frontend Developer", "PHP Developer", "Fullstack Developer"]} loop={0} cursor cursorStyle="|" typeSpeed={120} deleteSpeed={120} delaySpeed={2000} />
                 </div>
               <div className="bio mb-4">
                 {t('about.bio')}
