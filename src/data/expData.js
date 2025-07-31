@@ -1,4 +1,4 @@
-const experience = [
+const expData = [
     {
         position: "Intern PHP Developer (Laravel)",
         year: "3/2025 - 6/2025",
@@ -60,4 +60,4 @@ const experience = [
     }
 ]
 
-export default experience;
+export default expData;

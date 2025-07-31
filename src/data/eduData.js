@@ -1,4 +1,4 @@
-const education = [
+const eduData = [
     {
         school: "Trường Cao đẳng FPT Polytechnic",
         degree: "Cử nhân Công nghệ thông tin",
@@ -30,4 +30,4 @@ const education = [
     }
 ]
 
-export default education;
+export default eduData;
