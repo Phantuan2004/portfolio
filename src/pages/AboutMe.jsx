@@ -1,7 +1,5 @@
 import skills from "../data/skills";
 import projects from "../data/project";
-import education from "../data/eduData";
-import experience from "../data/expData";
 import "../styles/timeline.css";
 import { Typewriter } from "react-simple-typewriter";
 // Import i18next
@@ -19,6 +17,15 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
   ]
 
   const { t } = useTranslation();
+  const education = t('resume.educationList', { returnObjects: true });
+  const course = t('resume.courseList', { returnObjects: true });
+
+  const combinedList = [
+    ...education.map((edu) => ({ ...edu, type: 'education' })),
+    ...course.map((course) => ({ ...course, type: 'course' }))
+  ];
+
+  const experience = t('resume.experienceList', { returnObjects: true });
 
   // Xử lý ngăn tạo tab mới mặc định của Google Drive để tải file trực tiếp
   function handleDownload() {
@@ -55,7 +62,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
                   <i className="fas fa-arrow-alt-circle-right me-2"></i>
                   <span className="d-none d-md-inline"></span> {t('intro.viewPortfolio')}
                 </a>
-                <a className="btn btn-secondary mb-3" onClick={handleDownload} target="_blank" rel="noopener noreferrer">
+                <a className="btn btn-secondary mb-3" onClick={handleDownload}>
                   <i className="fas fa-file-alt me-2"></i>
                   <span className="d-none d-md-inline"></span> {t('intro.downloadCV')}
                 </a>
@@ -199,23 +206,29 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
                 {t('resume.education')}
               </h3>
               <div className="resume-column resume-left">
-                {education.map((edu, index) => (
-                  <div key={index} className="resume-item">
-                    <h4>{edu.degree}</h4>
-                    <h5>{edu.year}</h5>
-                    <p><em>{edu.school}</em></p>
-                    <p>{edu.desc}</p>
-                    <ul>
-                      {Array.isArray(edu.descDetail) ? (
-                        edu.descDetail.map((detail, detailIndex) => (
-                          <li key={detailIndex}>{detail}</li>
-                        ))
-                      ) : (
-                        <p>{edu.descDetail}</p>
-                      )}
-                    </ul>
-                  </div>
-                ))}
+              {combinedList.map((item, index) => (
+                <div key={index} className="resume-item">
+                  {item.type === 'education' ? (
+                    <>
+                      <h4>{item.degree}</h4>
+                      <h5>{item.duration}</h5>
+                      <p><em>{item.school}</em></p>
+                      <p>{item.major}</p>
+                      <p style={{marginLeft: '20px'}}>{item.specialization}</p>
+                    </>
+                  ) : (
+                    <>
+                      <h4>{item.title}</h4>
+                      <h5>{item.duration}</h5>
+                      <ul>
+                        {item.points.map((point, pointIndex) => (
+                          <li key={pointIndex}>{point}</li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                </div>
+              ))}
               </div>
             </div>
 
@@ -229,15 +242,15 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
                 {experience.map((exp, index) => (
                   <div key={index} className="resume-item">
                     <h4>{exp.position}</h4>
-                    <h5>{exp.year}</h5>
+                    <h5>{exp.duration}</h5>
                     <p><em>{exp.company}</em></p>
                     <ul>
-                      {Array.isArray(exp.desc) ? (
-                        exp.desc.map((item, index) => (
+                      {Array.isArray(exp.tasks) ? (
+                        exp.tasks.map((item, index) => (
                           <li key={index}>{item}</li>
                         ))
                       ) : (
-                        <li>{exp.desc}</li>
+                        <li>{exp.tasks}</li>
                       )}
                     </ul>
                   </div>
@@ -298,8 +311,8 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
                   id="cname"
                   name="name"
                   placeholder={t('contact.formName')}
-                  minlength="2"
-                  required=""
+                  minlength={2}
+                  required
                   aria-required="true"
                 />
               </div>
@@ -313,7 +326,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
                   id="cemail"
                   name="email"
                   placeholder={t('contact.formEmail')}
-                  required=""
+                  required
                   aria-required="true"
                 />
               </div>
@@ -327,7 +340,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
                   name="message"
                   placeholder={t('contact.formMessage')}
                   rows="10"
-                  required=""
+                  required
                   aria-required="true"
                 ></textarea>
               </div>

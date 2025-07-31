@@ -33,7 +33,53 @@
     "resume": {
         "title": "Resume",
         "education": "Education",
-        "experience": "Professional Experience"
+        "experience": "Professional Experience",
+        "educationList": [
+            {
+                "degree": "Bachelor of Information Technology",
+                "duration": "September 2022 – May 2025",
+                "school": "FPT Polytechnic College",
+                "major": "Information Technology",
+                "specialization": "Web Backend Development"
+            }
+        ],
+        "courseList": [
+            {
+                "title": "JavaScript Course - Udemy (by Jonas Schmedtmann)",
+                "duration": "January 2024 – February 2024",
+                "points": [
+                    "Learned JavaScript from basic to advanced: variables, functions, arrays, objects, and the DOM.",
+                    "Worked with asynchronous JavaScript (Promises, async/await, fetch API).",
+                    "Understood and applied Object-Oriented Programming (constructor functions, classes, inheritance).",
+                    "Practiced with multiple mini-projects and real-world exercises."
+                ]
+            }
+        ],
+        "experienceList": [
+            {
+                "position": "Intern PHP Developer (Laravel)",
+                "company": "OES Education Technology JSC",
+                "duration": "June 2022 - August 2022",
+                "tasks": [
+                    "Optimized the backend of a learning system using Laravel APIs.",
+                    "Worked with PostgreSQL, optimized the complex queries.",
+                    "Tested APIs with Postman, fixed 50% of logical errors.",
+                    "Proposed and implemented drag-and-drop UI using VueJS.",
+                    "Used GitHub, GitLab for version control in the team."
+                ]
+            },
+            {
+                "position": "Intern PHP Developer (Laravel)",
+                "company": "IMTA JSC",
+                "duration": "September 2024 - December 2024",
+                "tasks": [
+                    "Collaborated on the web project design and user flow.",
+                    "Designed the UI with Blade Template, Bootstrap, jQuery.",
+                    "Used GitHub and Docker for version and environment management.",
+                    "Explored AI Prompt Engineering to enhance AI features."
+                ]
+            }
+        ]
     },
 
     "contact": {
