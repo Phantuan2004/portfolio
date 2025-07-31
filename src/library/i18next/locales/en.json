@@ -10,7 +10,9 @@
 
     "intro": {
         "name": "Phan Hoang Tuan",
-        "bio": "Hello, I'm Tuan - Fresher PHP Laravel Developer. Nice to meet you at my website."
+        "bio": "Hello, I'm Tuan - Fresher PHP Laravel Developer. Nice to meet you at my website.",
+        "viewPortfolio": "View Portfolio",
+        "downloadCV": "Download CV"
     },
 
     "about": {
@@ -24,7 +26,7 @@
     },
 
     "projects": {
-        "title": "Featured Projects",
+        "title": "Featured Portfolio",
         "viewDetail": "View Case Study"
     },
 

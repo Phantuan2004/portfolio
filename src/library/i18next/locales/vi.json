@@ -10,7 +10,9 @@
 
     "intro": {
         "name": "Phan Hoàng Tuấn",
-        "bio": "Xin chào, tôi là Tuấn - Fresher PHP Laravel Developer. Chào mừng bạn đến với trang web của tôi."
+        "bio": "Xin chào, tôi là Tuấn - Fresher PHP Laravel Developer. Chào mừng bạn đến với trang web của tôi.",
+        "viewPortfolio": "Xem dự án",
+        "downloadCv": "Tải CV"
     },
 
     "about": {
