@@ -1,7 +1,7 @@
 import skills from "../data/skills";
 import projects from "../data/project";
-import education from "../data/education";
-import experience from "../data/experience";
+import education from "../data/eduData";
+import experience from "../data/expData";
 import "../styles/timeline.css";
 import { Typewriter } from "react-simple-typewriter";
 // Import i18next
@@ -20,6 +20,22 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
 
   const { t } = useTranslation();
 
+  // Xử lý ngăn tạo tab mới mặc định của Google Drive để tải file trực tiếp
+  function handleDownload() {
+    // Tạo 1 phần từ a <link> mởi trong DOM
+    const link = document.createElement('a');
+    // Gán href cho link, trỏ đến URL file PDF trên Google Drive
+    link.href = 'https://drive.google.com/uc?export=download&id=1meD32exGNsT_DCtZS0WEiCWagLKPCumo';
+    // Thêm thuộc tính 'download' cho thẻ <a> với tên file
+    link.setAttribute('download', 'PHP Developer - Phan Hoàng Tuan.pdf');
+    // Thêm thẻ <a> vào phần body của trang để nó trở thành một phần của DOM
+    document.body.appendChild(link);
+    // Giả lập sự kiện click lên thẻ <a> vừa tạo → kích hoạt trình duyệt tải file
+    link.click();
+    // Sau khi click xong, xóa thẻ <a> khỏi DOM để dọn dẹp
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       {/* About Me Section */}
@@ -37,11 +53,11 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
               <div className="mb-4">
                 <a className="btn btn-primary me-2 mb-3" href="#resume" onClick={(e) => {e.preventDefault(); resumeRef.current.scrollIntoView({ behavior: "smooth" });}}>
                   <i className="fas fa-arrow-alt-circle-right me-2"></i>
-                  <span className="d-none d-md-inline">View</span> Portfolio
+                  <span className="d-none d-md-inline"></span> {t('intro.viewPortfolio')}
                 </a>
-                <a className="btn btn-secondary mb-3" href="#">
+                <a className="btn btn-secondary mb-3" onClick={handleDownload} target="_blank" rel="noopener noreferrer">
                   <i className="fas fa-file-alt me-2"></i>
-                  <span className="d-none d-md-inline">View</span> Profile
+                  <span className="d-none d-md-inline"></span> {t('intro.downloadCV')}
                 </a>
               </div>
             </div>
