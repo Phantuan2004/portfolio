@@ -1,0 +1,51 @@
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.loader-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.loader-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(231, 76, 60, 0.2), rgba(0, 0, 0, 0.8));
+  animation: gradientShift 0.3s infinite;
+  z-index: -1;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.loading-text {
+  display: flex;
+  gap: 4px; /* Khoảng cách giữa các chấm */
+}
+
+.dot-animation {
+  display: inline-block;
+  animation: bounce 1.7s infinite;
+}
+
+.dot-animation:nth-child(2) {
+  animation-delay: 0.4s; /* Dãn cách animation cho chấm thứ 2 */
+}
+
+.dot-animation:nth-child(3) {
+  animation-delay: 0.8s; /* Dãn cách animation cho chấm thứ 3 */
+}

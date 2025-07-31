@@ -181,7 +181,7 @@ function AboutMe({ aboutRef, skillsRef, projectsRef, contactRef, resumeRef }) {
             ))}
           </div>
           <div className="text-center py-3">
-            <a href="portfolio.html" className="btn btn-primary">
+            <a href="projects.html" className="btn btn-primary">
               <i className="fas fa-arrow-alt-circle-right me-2"></i>View
               Portfolio
             </a>
